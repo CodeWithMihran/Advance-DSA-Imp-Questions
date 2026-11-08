@@ -366,40 +366,92 @@
 
 // Second Highest Occuring Element in Array
 
-#include <iostream>
-#include <vector>
+// #include <iostream>
+// #include <vector>
+// #include <unordered_map>
+// using namespace std;
+
+// int secondMostFrequentElement(vector<int> &arr){
+//     unordered_map<int, int> freq;
+//     for(int num: arr){
+//         freq[num]++;
+//     }
+//     int maxFreq = 0;
+//     int secondFreq = 0;
+//     int maxAns = -1;
+//     int secondAns = -1;
+//     for(auto it: freq){
+//         if(it.second > maxFreq){
+//             secondFreq = maxFreq;
+//             secondAns = maxAns;
+//             maxFreq = it.second;
+//             maxAns = it.first;
+//         }
+//         else if(it.second == maxFreq){
+//             if(secondFreq < maxFreq || it.first < secondAns){
+//                 secondFreq = it.second;
+//                 secondAns = it.first;
+//             }
+//         }
+//         else if(it.second > secondFreq){
+//             secondFreq = it.second;
+//             secondAns = it.first;
+//         }
+//         else if(it.second == secondFreq){
+//             if(secondAns == -1 || it.first < secondAns){
+//                 secondAns = it.first;
+//             }
+//         }
+//     }
+//     return secondAns;
+// }
+
+// int main(){
+    // vector<int> arr = {1, 2, 3, 4, 2, 4, 2, 5};
+    // cout<<"The second most frequent element in the array : "<<secondMostFrequentElement(arr)<<endl;
+    // return 0;
+// }
+
+
+
+// Sum of Highest and Lowest Frequency
+
+#include<iostream>
+#include<vector>
 #include <unordered_map>
 using namespace std;
 
-int secondMostFrequentElement(vector<int> &arr){
-    unordered_map<int, int> freq;
-    for(int num: arr){
+int sumHighestAndLowestFrequency(vector<int> &nums){
+    unordered_map<int,int> freq;
+    int n = nums.size();
+    for(int num: nums){
         freq[num]++;
     }
-    int maxFreq = 0;
-    int secondFreq = 0;
-    int maxAns = arr[0];
-    int secondAns = arr[0];
+    int minFreq = n, maxFreq = 0;
+    int minAns = -1, maxAns = -1;
     for(auto it: freq){
-        if(it.second > maxFreq){
-            secondFreq = maxFreq;
-            secondAns = maxAns;
-            maxFreq = it.second;
-            maxAns = it.first;
+        int element = it.first;
+        int count = it.second;
+        if(count > maxFreq){
+            maxFreq = count;
+            maxAns = element;
+        } 
+        else if(count == maxFreq && element < maxFreq){
+            maxAns = element;
         }
-        else if(it.second == maxFreq){
-            secondFreq = it.second;
-            secondAns = it.first;
+        if(count < minFreq){
+            minFreq = count;
+            minAns = element;
         }
-        else if(it.second == secondFreq){
-            secondAns = min(secondAns, it.first);
+        else if(count == minFreq && element < minAns){
+            minAns = element;
         }
     }
-    return secondAns;
+    return maxAns + minAns;
 }
 
 int main(){
-    vector<int> arr = {1, 2, 3, 4, 2, 4, 2, 5};
-    cout<<"The second most frequent element in the array : "<<secondMostFrequentElement(arr)<<endl;
+    vector<int> arr = {1, 2, 3, 4, 2, 4, 2, 5, 1};
+    cout<<"The sum of highest and lowest frequency elements are : "<<sumHighestAndLowestFrequency(arr)<<endl;
     return 0;
 }
